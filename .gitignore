@@ -19,7 +19,7 @@ RawBlameHistory
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
 
 # User-specific stuff:
-.idea/**
+.idea
 
 
 # CMake
@@ -32,7 +32,7 @@ cmake-build-debug/
 ## Plugin-specific files:
 
 # IntelliJ
-target/**
+target
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

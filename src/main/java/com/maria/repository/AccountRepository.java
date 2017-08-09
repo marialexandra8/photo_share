@@ -14,7 +14,7 @@ import java.util.List;
 public class AccountRepository extends BaseRepository {
     private static AccountRowMapper accountRowMapper = new AccountRowMapper();
 
-    
+
     public Account findById(int id) {
         String sql = "SELECT * FROM accounts WHERE id=?";
         List<Account> accounts = jdbcTemplate.query(sql, new Object[]{id}, accountRowMapper);
