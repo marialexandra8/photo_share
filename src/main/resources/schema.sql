@@ -1,3 +1,13 @@
-CREATE TABLE IF NOT EXISTS test(
-    id INT NOT NULL
+CREATE TABLE IF NOT EXISTS accounts(
+    id INT NOT NULL,
+    email VARCHAR(70) NOT NULL,
+    password BINARY(60) NOT NULL,
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)^;
+
+CREATE TABLE IF NOT EXISTS authentication_tokens(
+    id INT NOT NULL,
+    account_id INT NOT NULL,
+    token VARCHAR(50) NOT NULL,
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )^;

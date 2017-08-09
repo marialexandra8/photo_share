@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
 /**
- * Created by bjz on 8/8/2017.
+ * Created by  on 8/8/2017.
  */
 @Configuration
 @ComponentScan(basePackages = {"com.maria"})

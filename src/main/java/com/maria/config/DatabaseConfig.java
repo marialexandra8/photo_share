@@ -11,7 +11,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import javax.sql.DataSource;
 
 /**
- * Created by bjz on 8/8/2017.
+ * Created   on 8/8/2017.
  */
 @Configuration
 @ConfigurationProperties(prefix = "params.datasource")
