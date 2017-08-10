@@ -10,8 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/api/test")
 public class AuthenticationController {
-    @RequestMapping(value ="/", method = RequestMethod.GET)
-    public void test(){
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public void test() {
 
     }
 }

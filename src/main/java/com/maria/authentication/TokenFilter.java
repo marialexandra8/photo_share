@@ -1,5 +1,6 @@
 package com.maria.authentication;
 
+import com.maria.exception.AuthenticationException;
 import com.maria.security.PrincipalUser;
 import com.maria.service.api.AuthenticationService;
 import org.apache.commons.lang3.StringUtils;
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.filter.GenericFilterBean;
 
 import javax.servlet.FilterChain;
@@ -25,12 +27,15 @@ import java.io.IOException;
 public class TokenFilter extends GenericFilterBean {
     private final AuthenticationService authenticationService;
     private final AuthenticationProvider authenticationProvider;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
     private final static Logger LOGGER = LoggerFactory.getLogger(TokenFilter.class);
 
     @Autowired
-    public TokenFilter(AuthenticationService authenticationService, AuthenticationProvider authenticationProvider) {
+    public TokenFilter(AuthenticationService authenticationService, AuthenticationProvider authenticationProvider
+            , AuthenticationEntryPoint authenticationEntryPoint) {
         this.authenticationService = authenticationService;
         this.authenticationProvider = authenticationProvider;
+        this.authenticationEntryPoint = authenticationEntryPoint;
     }
 
     @Override
@@ -50,15 +55,19 @@ public class TokenFilter extends GenericFilterBean {
             return;
         }
         LOGGER.info("Token provided: {}, from IP address {}", token, request.getRemoteAddr());
-
-        PrincipalUser principalUser = authenticationService.authenticateByToken(token);
-        TokenBasedAuthentication authentication = new TokenBasedAuthentication();
-        authentication.setAuthenticated(true);
-        authentication.setToken(token);
-        authentication.setPrincipalUser(principalUser);
-        Authentication auth = authenticationProvider.authenticate(authentication);
-        SecurityContextHolder.getContext().setAuthentication(auth);
-        filterChain.doFilter(request, response);
+        try {
+            PrincipalUser principalUser = authenticationService.authenticateByToken(token);
+            TokenBasedAuthentication authentication = new TokenBasedAuthentication();
+            authentication.setAuthenticated(true);
+            authentication.setToken(token);
+            authentication.setPrincipalUser(principalUser);
+            Authentication auth = authenticationProvider.authenticate(authentication);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+            filterChain.doFilter(request, response);
+        } catch (AuthenticationException e) {
+            SecurityContextHolder.clearContext();
+            authenticationEntryPoint.commence(request, response, e);
+        }
 
     }
 }

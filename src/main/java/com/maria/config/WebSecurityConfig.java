@@ -1,5 +1,6 @@
 package com.maria.config;
 
+import com.maria.authentication.TokenAuthenticationEntryPoint;
 import com.maria.authentication.TokenAuthenticationProvider;
 import com.maria.authentication.TokenFilter;
 import com.maria.service.api.AuthenticationService;
@@ -7,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -26,6 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private TokenAuthenticationProvider tokenAuthenticationProvider;
     @Autowired
     private AuthenticationService authenticationService;
+    @Autowired
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -37,6 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(tokenFilter(), UsernamePasswordAuthenticationFilter.class)
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
+                .exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint())
+                .and()
                 .csrf().disable()
                 .logout().disable()
                 .httpBasic().disable()
@@ -45,11 +53,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        super.configure(web);
+        web.ignoring().antMatchers("/api/register", "/api/test/");
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(this.tokenAuthenticationProvider);
+    }
+    public TokenFilter tokenFilter() {
+        return new TokenFilter(authenticationService, tokenAuthenticationProvider, authenticationEntryPoint());
     }
 
     @Bean
-    public TokenFilter tokenFilter() {
-        return new TokenFilter(authenticationService, tokenAuthenticationProvider);
+    public AuthenticationEntryPoint authenticationEntryPoint() {
+        return new TokenAuthenticationEntryPoint();
     }
 }
