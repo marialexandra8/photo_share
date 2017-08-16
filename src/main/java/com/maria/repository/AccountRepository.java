@@ -27,6 +27,15 @@ public class AccountRepository extends BaseRepository {
         return accounts.get(0);
     }
 
+    public Account findByEmail(String email) {
+        String sql = "SELECT * FROM accounts WHERE email=?";
+        List<Account> accounts = jdbcTemplate.query(sql, new Object[]{email}, accountRowMapper);
+        if (accounts.isEmpty()) {
+            throw new NotFoundException("No account for email: " + email);
+        }
+        return accounts.get(0);
+    }
+
     public Account createAccount(String email, String password) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO accounts(email, password) VALUES (:email, :password)";

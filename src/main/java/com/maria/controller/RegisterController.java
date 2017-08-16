@@ -4,6 +4,7 @@ import com.maria.converter.AccountConverter;
 import com.maria.model.account.Account;
 import com.maria.model.account.AccountJsonResponse;
 import com.maria.model.account.CreateAccountJsonRequest;
+import com.maria.model.account.Gender;
 import com.maria.service.account.model.CreateAccountRequest;
 import com.maria.service.api.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +32,13 @@ public class RegisterController {
         String email = createAccountJsonRequest.getEmail();
         String password = createAccountJsonRequest.getPassword();
 
+        Gender gender = Gender.valueOf(createAccountJsonRequest.getGender());
         CreateAccountRequest createAccountRequest = new CreateAccountRequest()
                 .setEmail(email)
-                .setPassword(password);
+                .setPassword(password)
+                .setBirthday(createAccountJsonRequest.getBirthday())
+                .setGender(gender)
+                .setName(createAccountJsonRequest.getName());
         Account createdAccount = accountService.createAccount(createAccountRequest);
         return accountConverter.toAccountJsonResponse(createdAccount);
     }

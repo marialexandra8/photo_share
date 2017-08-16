@@ -7,6 +7,14 @@ public class AccountJsonResponse {
     private Integer id;
     private String email;
 
+    public AccountJsonResponse() {
+    }
+
+    public AccountJsonResponse(Account account) {
+        this
+                .setId(account.getId())
+                .setEmail(account.getEmail());
+    }
 
     public Integer getId() {
         return id;

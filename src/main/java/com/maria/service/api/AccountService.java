@@ -1,6 +1,8 @@
 package com.maria.service.api;
 
 import com.maria.model.account.Account;
+import com.maria.model.authentication.AuthenticationRequest;
+import com.maria.model.authentication.AuthenticationResponse;
 import com.maria.service.account.model.CreateAccountRequest;
 
 /**
@@ -8,4 +10,5 @@ import com.maria.service.account.model.CreateAccountRequest;
  */
 public interface AccountService {
     Account createAccount(CreateAccountRequest createAccountRequest);
+
 }

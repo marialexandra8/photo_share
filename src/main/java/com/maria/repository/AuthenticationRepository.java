@@ -25,6 +25,11 @@ public class AuthenticationRepository extends BaseRepository {
         return authenticationTokens.get(0);
     }
 
+    public boolean tokenExists(String token) {
+        String sql = "SELECT count(*) FROM authentication_tokens WHERE token=?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{token}, Integer.class) > 0;
+    }
+
     public void deleteToken(String token) {
         String sql = "DELETE FROM authentication_tokens WHERE token = ?";
         int rowsDeleted = jdbcTemplate.update(sql, token);

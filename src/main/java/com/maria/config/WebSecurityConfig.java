@@ -53,13 +53,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/api/register", "/api/test/");
+        web.ignoring().antMatchers("/api/register", "/api/authenticate");
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(this.tokenAuthenticationProvider);
     }
+
     public TokenFilter tokenFilter() {
         return new TokenFilter(authenticationService, tokenAuthenticationProvider, authenticationEntryPoint());
     }

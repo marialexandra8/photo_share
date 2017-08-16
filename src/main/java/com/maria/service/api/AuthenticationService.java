@@ -1,5 +1,8 @@
 package com.maria.service.api;
 
+import com.maria.model.authentication.AuthenticationRequest;
+import com.maria.model.authentication.AuthenticationResponse;
+import com.maria.model.token.Token;
 import com.maria.security.PrincipalUser;
 
 /**
@@ -7,4 +10,7 @@ import com.maria.security.PrincipalUser;
  */
 public interface AuthenticationService {
     PrincipalUser authenticateByToken(String token);
+
+    AuthenticationResponse authenticateAccount(AuthenticationRequest authenticationRequest);
+
 }

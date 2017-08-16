@@ -7,7 +7,7 @@ server:
 #database
 params:
   datasource:
-    jdbcUrl: jdbc:mysql://localhost:3306/test?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    jdbcUrl: jdbc:mysql://localhost:3306/photo_share?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
     connectionTimeout: 600000
     username: root
     password: root

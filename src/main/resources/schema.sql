@@ -13,3 +13,26 @@ CREATE TABLE IF NOT EXISTS authentication_tokens(
 
     FOREIGN KEY (account_id) REFERENCES accounts(id) ON DELETE CASCADE
 )^;
+
+CREATE TABLE IF NOT EXISTS users(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(75) NOT NULL,
+    name VARCHAR(60),
+    birthday DATE,
+    gender ENUM('MALE', 'FEMALE'),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)^;
+
+CREATE TABLE IF NOT EXISTS user_uploads(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    upload_name VARCHAR(100) NOT NULL,
+    mime_type ENUM('JPEG', 'JPG', 'PNG', 'GIF'),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)^;
+
+CREATE TABLE IF NOT EXISTS collections(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    public BIT NOT NULL DEFAULT 0,
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)^;

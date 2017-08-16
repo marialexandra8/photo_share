@@ -1,5 +1,9 @@
 package com.maria.model.account;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.maria.serializer.FullDateDeserializer;
+
 import java.time.LocalDate;
 
 /**
@@ -25,6 +29,7 @@ public class CreateAccountJsonRequest {
         return birthday;
     }
 
+    @JsonDeserialize(using = FullDateDeserializer.class)
     public CreateAccountJsonRequest setBirthday(LocalDate birthday) {
         this.birthday = birthday;
         return this;
