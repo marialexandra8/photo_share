@@ -5,7 +5,7 @@ import com.maria.model.account.Account;
 import com.maria.model.account.AccountJsonResponse;
 import com.maria.model.account.CreateAccountJsonRequest;
 import com.maria.model.account.Gender;
-import com.maria.service.account.model.CreateAccountRequest;
+import com.maria.model.account.CreateAccountRequest;
 import com.maria.service.api.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

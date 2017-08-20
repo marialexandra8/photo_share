@@ -13,6 +13,8 @@ public class User {
     private String name;
     private LocalDate birthday;
     private Gender gender;
+    private String logoName;
+    private String logoPath;
 
     public Gender getGender() {
         return gender;
@@ -29,6 +31,24 @@ public class User {
 
     public User setId(int id) {
         this.id = id;
+        return this;
+    }
+
+    public String getLogoName() {
+        return logoName;
+    }
+
+    public User setLogoName(String logoName) {
+        this.logoName = logoName;
+        return this;
+    }
+
+    public String getLogoPath() {
+        return logoPath;
+    }
+
+    public User setLogoPath(String logoPath) {
+        this.logoPath = logoPath;
         return this;
     }
 

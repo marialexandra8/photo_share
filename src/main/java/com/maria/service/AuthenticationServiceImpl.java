@@ -71,6 +71,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
     private PrincipalUser mapToPrincipal(Account account) {
-        return new PrincipalUser(account.getEmail(), account.getPassword(), Collections.singletonList(new SimpleGrantedAuthority(account.getEmail())));
+        //TODO change account type to match
+        return new PrincipalUser(account, Collections.singletonList(new SimpleGrantedAuthority(account.getEmail())));
     }
 }

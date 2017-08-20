@@ -1,6 +1,4 @@
-package com.maria.service.account.model;
-
-import com.maria.model.account.Gender;
+package com.maria.model.account;
 
 import java.time.LocalDate;
 

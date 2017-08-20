@@ -36,6 +36,11 @@ public class AccountRepository extends BaseRepository {
         return accounts.get(0);
     }
 
+    public boolean accountEmailExists(String email) {
+        String sql = "SELECT count(*) from accounts WHERE email=?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{email}, Integer.class) > 0;
+    }
+
     public Account createAccount(String email, String password) {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         String sql = "INSERT INTO accounts(email, password) VALUES (:email, :password)";

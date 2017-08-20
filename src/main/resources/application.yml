@@ -15,3 +15,18 @@ params:
     initialize: true
 
 spring.datasource.separator: ^;
+
+#files
+images:
+  rootPath: D:/photo_share/images
+  users:
+    logo:
+      rootPath: /users/logos
+      url: /users/logos
+    contest:
+      rootPath: /users/contests
+      url: /users/contests
+  contests:
+    logo:
+      rootPath: /contests/logos
+      url: /contests/logos

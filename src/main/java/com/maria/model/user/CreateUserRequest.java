@@ -12,6 +12,16 @@ public class CreateUserRequest {
     private String name;
     private LocalDate birthday;
     private Gender gender;
+    private int accountId;
+
+    public int getAccountId() {
+        return accountId;
+    }
+
+    public CreateUserRequest setAccountId(int accountId) {
+        this.accountId = accountId;
+        return this;
+    }
 
     public Gender getGender() {
         return gender;

@@ -16,23 +16,37 @@ CREATE TABLE IF NOT EXISTS authentication_tokens(
 
 CREATE TABLE IF NOT EXISTS users(
     id INT PRIMARY KEY AUTO_INCREMENT,
+    account_id INT NOT NULL,
     email VARCHAR(75) NOT NULL,
     name VARCHAR(60),
+    logo VARCHAR(60),
     birthday DATE,
     gender ENUM('MALE', 'FEMALE'),
-    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(account_id) REFERENCES accounts(id) ON DELETE CASCADE
 )^;
 
-CREATE TABLE IF NOT EXISTS user_uploads(
-    id INT PRIMARY KEY AUTO_INCREMENT,
-    upload_name VARCHAR(100) NOT NULL,
-    mime_type ENUM('JPEG', 'JPG', 'PNG', 'GIF'),
-    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-)^;
 
-CREATE TABLE IF NOT EXISTS collections(
+CREATE TABLE IF NOT EXISTS contests(
     id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
-    public BIT NOT NULL DEFAULT 0,
+    description VARCHAR(256) NOT NULL,
+    --tags VARCHAR(256), -- JSON list of tags
+    deadline TIMESTAMP NOT NULL,
+    logo VARCHAR(100),
+
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)^;
+
+CREATE TABLE IF NOT EXISTS contest_entries(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    contest_id INT NOT NULL,
+    file_name VARCHAR(150) NOT NULL,
+    mime_type VARCHAR(50),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(contest_id) REFERENCES contests(id) ON DELETE CASCADE
 )^;

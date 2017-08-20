@@ -10,4 +10,6 @@ public interface UserService {
     User createUser(CreateUserRequest createUserRequest);
 
     User findById(int id);
+
+    User findByAccountId(int accountId);
 }
