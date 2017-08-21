@@ -1,5 +1,6 @@
 package com.maria.model.contest;
 
+import com.maria.model.review.Review;
 import com.maria.model.user.User;
 
 import java.util.List;
@@ -8,9 +9,40 @@ import java.util.List;
  * Created on 8/20/2017.
  */
 public class ContestEntry {
+    private int id;
+    private int contestId;
     private User user;
     private List<String> imagesName;
     private List<String> imagesPath;
+    private Review review;
+
+
+    public Review getReview() {
+        return review;
+    }
+
+    public ContestEntry setReview(Review review) {
+        this.review = review;
+        return this;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public ContestEntry setId(int id) {
+        this.id = id;
+        return this;
+    }
+
+    public int getContestId() {
+        return contestId;
+    }
+
+    public ContestEntry setContestId(int contestId) {
+        this.contestId = contestId;
+        return this;
+    }
 
     public User getUser() {
         return user;

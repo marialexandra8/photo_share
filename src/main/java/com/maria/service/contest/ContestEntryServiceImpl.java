@@ -1,6 +1,7 @@
 package com.maria.service.contest;
 
 import com.maria.model.contest.ContestEntry;
+import com.maria.model.contest.CreateContestEntryRequest;
 import com.maria.repository.ContestEntryRepository;
 import com.maria.service.api.ContestEntryService;
 import com.maria.service.api.FileService;
@@ -25,8 +26,15 @@ public class ContestEntryServiceImpl implements ContestEntryService {
     }
 
     @Override
+    public ContestEntry createContestEntry(CreateContestEntryRequest createContestEntryRequest) {
+        int contestId = createContestEntryRequest.getContestId();
+        int userId = createContestEntryRequest.getUserId();
+        return contestEntryRepository.createContestEntry(userId, contestId);
+    }
+
+    @Override
     public List<ContestEntry> findForContestId(int contestId) {
-        return addUrl(contestEntryRepository.findForContestId(contestId));
+        return addUrl(contestEntryRepository.findByContestId(contestId));
     }
 
     private ContestEntry addUrl(ContestEntry contestEntry) {
@@ -38,6 +46,7 @@ public class ContestEntryServiceImpl implements ContestEntryService {
     private List<ContestEntry> addUrl(List<ContestEntry> contestEntries) {
         return contestEntries.stream()
                 .map(contestEntry -> new ContestEntry()
+                        .setId(contestEntry.getId())
                         .setImagesPath(addUrl(contestEntry).getImagesPath())
                         .setImagesName(contestEntry.getImagesName())
                         .setUser(contestEntry.getUser()))

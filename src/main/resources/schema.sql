@@ -43,10 +43,30 @@ CREATE TABLE IF NOT EXISTS contest_entries(
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     contest_id INT NOT NULL,
-    file_name VARCHAR(150) NOT NULL,
-    mime_type VARCHAR(50),
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY(contest_id) REFERENCES contests(id) ON DELETE CASCADE
+)^;
+
+CREATE TABLE IF NOT EXISTS contest_entry_images(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    contest_entry_id INT NOT NULL,
+    file_name VARCHAR(150) NOT NULL,
+    mime_type VARCHAR(50),
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(contest_entry_id) REFERENCES contest_entries(id) ON DELETE CASCADE
+)^;
+
+CREATE TABLE IF NOT EXISTS reviews(
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    contest_entry_id INT NOT NULL,
+    rate INT NOT NULL,
+    created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+    FOREIGN KEY(contest_entry_id) REFERENCES contest_entries(id) ON DELETE CASCADE,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
+
 )^;

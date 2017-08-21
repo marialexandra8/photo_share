@@ -97,6 +97,11 @@ public class ContestController {
             throw new InvalidArgumentException("The images content cannot be empty");
         }
         User user = userService.findByAccountId(principalUser.getAccount().getId());
+
+        CreateContestEntryRequest createContestEntryRequest = new CreateContestEntryRequest()
+                .setContestId(contestId)
+                .setUserId(user.getId());
+        ContestEntry contestEntry = contestEntryService.createContestEntry(createContestEntryRequest);
         images.forEach(imageRequest -> {
             try {
                 InputStream inputStream = imageRequest.getInputStream();
@@ -106,8 +111,7 @@ public class ContestController {
                         .setInputStream(inputStream)
                         .setName(originalFilename)
                         .setMimeType(mimeType)
-                        .setUserId(user.getId())
-                        .setContestId(contestId);
+                        .setContestEntryId(contestEntry.getId());
 
                 imageService.saveImageForContestEntry(saveContestEntryImageRequest);
 

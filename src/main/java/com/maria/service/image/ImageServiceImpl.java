@@ -35,14 +35,13 @@ public class ImageServiceImpl implements ImageService {
         String fileName = saveContestEntryImageRequest.getName();
         SupportedMimeType mimeType = saveContestEntryImageRequest.getMimeType();
         InputStream inputStream = saveContestEntryImageRequest.getInputStream();
-        int userId = saveContestEntryImageRequest.getUserId();
-        int contestId = saveContestEntryImageRequest.getContestId();
+        int contestEntryId = saveContestEntryImageRequest.getContestEntryId();
 
         while (imageRepository.imageNameExistsInContestEntry(fileName)) {
             fileName = addRandomIntToFileName(fileName, mimeType);
         }
         fileService.saveContestEntryFile(inputStream, fileName);
-        imageRepository.saveImageForContestEntry(fileName, mimeType, userId, contestId);
+        imageRepository.saveImageForContestEntry(fileName, mimeType, contestEntryId);
     }
 
     @Override

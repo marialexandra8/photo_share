@@ -9,25 +9,15 @@ import java.io.InputStream;
 public class SaveContestEntryImageRequest {
     private InputStream inputStream;
     private String name;
-    private int userId;
-    private int contestId;
+    private int contestEntryId;
     private SupportedMimeType mimeType;
 
-    public int getContestId() {
-        return contestId;
+    public int getContestEntryId() {
+        return contestEntryId;
     }
 
-    public SaveContestEntryImageRequest setContestId(int contestId) {
-        this.contestId = contestId;
-        return this;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public SaveContestEntryImageRequest setUserId(int userId) {
-        this.userId = userId;
+    public SaveContestEntryImageRequest setContestEntryId(int contestEntryId) {
+        this.contestEntryId = contestEntryId;
         return this;
     }
 
