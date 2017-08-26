@@ -8,6 +8,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
+import java.sql.JDBCType;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -33,6 +34,13 @@ public class ContestRepository extends BaseRepository {
     public List<Contest> findAll() {
         String sql = "SELECT * FROM contests c";
         return jdbcTemplate.query(sql, CONTEST_ROW_MAPPER);
+    }
+
+    public List<Contest> findAllActiveContestsForUserId(int userId) {
+        String sql = "SELECT * FROM contests c JOIN contest_entries ce " +
+                " ON c.id = ce.contest_id AND c.deadline > NOW() AND ce.user_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{userId}, CONTEST_ROW_MAPPER);
+
     }
 
     public Contest findById(int id) {

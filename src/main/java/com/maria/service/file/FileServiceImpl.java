@@ -72,17 +72,17 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String getRelativePathForContestEntryImage(String imageName) {
-        return String.format("%s/%s", usersContestImagesUrl, imageName);
+        return imageName == null ? "" : String.format("%s/%s", usersContestImagesUrl, imageName);
     }
 
     @Override
     public String getRelativePathForContestLogo(String imageName) {
-        return String.format("%s/%s", contestsLogoUrl, imageName);
+        return imageName == null ? "" : String.format("%s/%s", contestsLogoUrl, imageName);
     }
 
     @Override
     public String getRelativePathForUserLogo(String imageName) {
-        return String.format("%s/%s", usersLogoUrl, imageName);
+        return imageName == null ? "" : String.format("%s/%s", usersLogoUrl, imageName);
     }
 
 

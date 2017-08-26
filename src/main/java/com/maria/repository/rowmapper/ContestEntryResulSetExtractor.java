@@ -25,18 +25,6 @@ public class ContestEntryResulSetExtractor implements ResultSetExtractor<List<Co
             int id = resultSet.getInt("ce.id");
             String imageName = resultSet.getString("cei.file_name");
             List<String> imagesName = new ArrayList<>();
-            LocalDate check = resultSet.getDate("r.created_on").toLocalDate();
-            Review review;
-            if (check != null) {
-                Integer reviewId = resultSet.getInt("r.id");
-                int userReviewerId = resultSet.getInt("r.user_id");
-                int rate = resultSet.getInt("r.rate");
-                review = new Review()
-                        .setContestEntryId(id)
-                        .setId(reviewId)
-                        .setRate(rate)
-                        .setUserId(userReviewerId);
-            }
 
             if (imageName != null) {
                 imagesName.add(imageName);

@@ -20,6 +20,7 @@ RawBlameHistory
 
 # User-specific stuff:
 .idea
+*.iml
 
 
 # CMake

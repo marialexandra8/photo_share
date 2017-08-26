@@ -30,3 +30,7 @@ images:
     logo:
       rootPath: /contests/logos
       url: /contests/logos
+
+#experience parameters
+experience:
+  growingRatio: 5 # $growingRation * nr_of_won_contets = experience

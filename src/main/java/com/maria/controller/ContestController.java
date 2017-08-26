@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.attribute.UserPrincipal;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,6 +57,15 @@ public class ContestController {
     @RequestMapping(value = "/contests", method = RequestMethod.GET)
     public List<ContestJsonResponse> findAll() {
         return toContestJsonListResponse(contestService.findAll());
+    }
+
+    @RequestMapping(value = "/contests/mine/active")
+    public List<ContestJsonResponse> findAllOwnedActiveContest(@AuthenticationPrincipal PrincipalUser principalUser) {
+        User user = userService.findByAccountId(principalUser.getAccount().getId());
+        List<Contest> contests = contestService.findAllActiveContestsForUserId(user.getId());
+
+        return toContestJsonListResponse(contests);
+
     }
 
     @RequestMapping(value = "/contests/entries/{contestId}", method = RequestMethod.GET)

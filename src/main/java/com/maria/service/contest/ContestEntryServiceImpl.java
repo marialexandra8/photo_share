@@ -29,6 +29,7 @@ public class ContestEntryServiceImpl implements ContestEntryService {
     public ContestEntry createContestEntry(CreateContestEntryRequest createContestEntryRequest) {
         int contestId = createContestEntryRequest.getContestId();
         int userId = createContestEntryRequest.getUserId();
+        //TODO validate no duplicates for user and contest
         return contestEntryRepository.createContestEntry(userId, contestId);
     }
 

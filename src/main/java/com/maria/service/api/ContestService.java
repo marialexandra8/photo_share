@@ -12,4 +12,6 @@ public interface ContestService {
     Contest createContest(CreateContestRequest createContestRequest);
 
     List<Contest> findAll();
+
+    List<Contest> findAllActiveContestsForUserId(int userId);
 }
