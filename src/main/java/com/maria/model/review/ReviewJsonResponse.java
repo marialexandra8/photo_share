@@ -5,12 +5,10 @@ package com.maria.model.review;
  */
 public class ReviewJsonResponse {
     private int id;
-    private int rate;
 
     public ReviewJsonResponse(Review review) {
         this
-                .setId(review.getId())
-                .setRate(review.getRate());
+                .setId(review.getId());
     }
 
     public ReviewJsonResponse() {
@@ -25,12 +23,4 @@ public class ReviewJsonResponse {
         return this;
     }
 
-    public int getRate() {
-        return rate;
-    }
-
-    public ReviewJsonResponse setRate(int rate) {
-        this.rate = rate;
-        return this;
-    }
 }

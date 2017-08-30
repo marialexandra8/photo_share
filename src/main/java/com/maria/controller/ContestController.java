@@ -59,13 +59,17 @@ public class ContestController {
         return toContestJsonListResponse(contestService.findAll());
     }
 
-    @RequestMapping(value = "/contests/mine/active")
+    @RequestMapping(value = "/contests/{contestId}", method = RequestMethod.GET)
+    public ContestJsonResponse findContestById(@PathVariable Integer contestId) {
+        return new ContestJsonResponse(contestService.findById(contestId));
+    }
+
+    @RequestMapping(value = "/contests/mine/active", method = RequestMethod.GET)
     public List<ContestJsonResponse> findAllOwnedActiveContest(@AuthenticationPrincipal PrincipalUser principalUser) {
         User user = userService.findByAccountId(principalUser.getAccount().getId());
         List<Contest> contests = contestService.findAllActiveContestsForUserId(user.getId());
 
         return toContestJsonListResponse(contests);
-
     }
 
     @RequestMapping(value = "/contests/entries/{contestId}", method = RequestMethod.GET)

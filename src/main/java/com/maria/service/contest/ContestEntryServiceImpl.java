@@ -50,6 +50,7 @@ public class ContestEntryServiceImpl implements ContestEntryService {
                         .setId(contestEntry.getId())
                         .setImagesPath(addUrl(contestEntry).getImagesPath())
                         .setImagesName(contestEntry.getImagesName())
+                        .setReviews(contestEntry.getReviews())
                         .setUser(contestEntry.getUser()))
                 .collect(Collectors.toList());
     }

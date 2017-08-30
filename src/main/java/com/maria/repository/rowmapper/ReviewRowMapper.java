@@ -21,7 +21,6 @@ public class ReviewRowMapper implements RowMapper<Review> {
         return new Review()
                 .setContestEntryId(contestEntryId)
                 .setId(id)
-                .setRate(rate)
                 .setUserId(userId);
     }
 }

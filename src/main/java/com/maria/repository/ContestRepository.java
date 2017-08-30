@@ -40,7 +40,6 @@ public class ContestRepository extends BaseRepository {
         String sql = "SELECT * FROM contests c JOIN contest_entries ce " +
                 " ON c.id = ce.contest_id AND c.deadline > NOW() AND ce.user_id = ?";
         return jdbcTemplate.query(sql, new Object[]{userId}, CONTEST_ROW_MAPPER);
-
     }
 
     public Contest findById(int id) {

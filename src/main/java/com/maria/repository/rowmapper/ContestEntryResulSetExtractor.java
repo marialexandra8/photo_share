@@ -25,6 +25,19 @@ public class ContestEntryResulSetExtractor implements ResultSetExtractor<List<Co
             int id = resultSet.getInt("ce.id");
             String imageName = resultSet.getString("cei.file_name");
             List<String> imagesName = new ArrayList<>();
+            int reviewId = resultSet.getInt("r.id");
+            int userIdForReview = resultSet.getInt("r.user_id");
+            int contestEntryId = resultSet.getInt("r.contest_entry_id");
+
+            Review review = new Review()
+                    .setUserId(userIdForReview)
+                    .setId(reviewId)
+                    .setContestEntryId(contestEntryId);
+
+            List<Review> reviews = new ArrayList<>();
+            if (review.getId() > 0) {
+                reviews.add(review);
+            }
 
             if (imageName != null) {
                 imagesName.add(imageName);
@@ -53,15 +66,25 @@ public class ContestEntryResulSetExtractor implements ResultSetExtractor<List<Co
                         .setContestId(contestId)
                         .setId(id)
                         .setUser(user)
-                        .setImagesName(imagesName));
+                        .setImagesName(imagesName)
+                        .setReviews(reviews));
             } else {
                 ContestEntry contestEntry = contestEntriesMap.get(id);
-                boolean checkForDuplicates = contestEntry.getImagesName().stream()
+                boolean checkForImageNameDuplicates = contestEntry.getImagesName().stream()
                         .noneMatch(addImageName -> addImageName.equals(imageName));
-                if (checkForDuplicates) {
+                if (checkForImageNameDuplicates) {
                     imagesName.addAll(contestEntry.getImagesName());
                     contestEntriesMap.get(id)
                             .setImagesName(imagesName);
+                }
+
+                boolean checkForReviewDuplicates = contestEntry.getReviews().stream()
+                        .noneMatch(insertedReview -> insertedReview.getId() == review.getId());
+
+                if (checkForReviewDuplicates) {
+                    reviews.addAll(contestEntry.getReviews());
+                    contestEntriesMap.get(id)
+                            .setReviews(reviews);
                 }
             }
 

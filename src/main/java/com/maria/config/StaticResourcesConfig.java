@@ -10,10 +10,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
  */
 @Configuration
 public class StaticResourcesConfig extends WebMvcConfigurerAdapter {
-    @Value("${files.rootPath}")
+    @Value("${images.rootPath}")
     private String imagesRoot;
-    @Value("${files.users.rootFolder}")
+    @Value("${images.users.logo.rootPath}")
     private String usersRoot;
+    @Value("${images.contests.logo.rootPath}")
+    private String contestsRoot;
+    @Value("${images.users.contest.url}")
+    private String usersUploads;
 
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
             "classpath:/META-INF/resources/", "classpath:/resources/",
@@ -21,7 +25,9 @@ public class StaticResourcesConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/files/users/**").addResourceLocations("image:" + imagesRoot + usersRoot + "/");
+        registry.addResourceHandler("/users/logos/**").addResourceLocations("file:" + imagesRoot + usersRoot + "/");
+        registry.addResourceHandler("/users/contests/**").addResourceLocations("file:" + imagesRoot + usersUploads + "/");
+        registry.addResourceHandler("/contests/logos/**").addResourceLocations("file:" + imagesRoot + contestsRoot + "/");
         registry.addResourceHandler("/swagger/**").addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
 
     }

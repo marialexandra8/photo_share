@@ -46,4 +46,10 @@ public class ContestServiceImpl implements ContestService {
         contests.forEach(contest -> contest.setLogoPath(fileService.getRelativePathForContestLogo(contest.getLogoName())));
         return contests;
     }
+
+    @Override
+    public Contest findById(int id) {
+        Contest contest = contestRepository.findById(id);
+        return contest.setLogoPath(fileService.getRelativePathForContestLogo(contest.getLogoName()));
+    }
 }

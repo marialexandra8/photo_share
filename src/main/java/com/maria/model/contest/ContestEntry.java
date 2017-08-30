@@ -14,15 +14,14 @@ public class ContestEntry {
     private User user;
     private List<String> imagesName;
     private List<String> imagesPath;
-    private Review review;
+    private List<Review> reviews;
 
-
-    public Review getReview() {
-        return review;
+    public List<Review> getReviews() {
+        return reviews;
     }
 
-    public ContestEntry setReview(Review review) {
-        this.review = review;
+    public ContestEntry setReviews(List<Review> reviews) {
+        this.reviews = reviews;
         return this;
     }
 

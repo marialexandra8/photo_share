@@ -5,7 +5,6 @@ package com.maria.model.review;
  */
 public class Review {
     private int id;
-    private int rate;
     private int userId;
     private int contestEntryId;
 
@@ -15,15 +14,6 @@ public class Review {
 
     public Review setId(int id) {
         this.id = id;
-        return this;
-    }
-
-    public int getRate() {
-        return rate;
-    }
-
-    public Review setRate(int rate) {
-        this.rate = rate;
         return this;
     }
 

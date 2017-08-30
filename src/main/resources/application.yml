@@ -5,9 +5,11 @@ server:
 
 
 #database
+# ?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&
 params:
   datasource:
-    jdbcUrl: jdbc:mysql://localhost:3306/photo_share?zeroDateTimeBehavior=convertToNull&useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
+    driverClassName: com.mysql.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/photo_share?useSSL=false
     connectionTimeout: 600000
     username: root
     password: root

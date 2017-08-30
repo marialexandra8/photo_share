@@ -63,11 +63,9 @@ CREATE TABLE IF NOT EXISTS reviews(
     id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     contest_entry_id INT NOT NULL,
-    rate INT NOT NULL,
     created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
     FOREIGN KEY(contest_entry_id) REFERENCES contest_entries(id) ON DELETE CASCADE,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
 
 )^;
-

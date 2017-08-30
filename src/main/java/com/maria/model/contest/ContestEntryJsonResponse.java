@@ -11,15 +11,27 @@ public class ContestEntryJsonResponse {
     private Integer id;
     private UserJsonResponse userJsonResponse;
     private List<String> imagesUrl;
+    private Integer likes;
+
 
     public ContestEntryJsonResponse(ContestEntry contestEntry) {
         this
                 .setId(contestEntry.getId())
                 .setImagesUrl(contestEntry.getImagesPath())
+                .setLikes(contestEntry.getReviews().size())
                 .setUserJsonResponse(new UserJsonResponse(contestEntry.getUser()));
     }
 
     public ContestEntryJsonResponse() {
+    }
+
+    public Integer getLikes() {
+        return likes;
+    }
+
+    public ContestEntryJsonResponse setLikes(Integer likes) {
+        this.likes = likes;
+        return this;
     }
 
     public Integer getId() {

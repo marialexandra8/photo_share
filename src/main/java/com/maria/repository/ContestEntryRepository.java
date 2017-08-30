@@ -33,6 +33,7 @@ public class ContestEntryRepository extends BaseRepository {
         String sql = "SELECT * FROM users u " +
                 " JOIN contest_entries ce ON (u.id = ce.user_id) " +
                 " LEFT JOIN contest_entry_images cei ON (ce.id = cei.contest_entry_id) " +
+                " LEFT JOIN reviews r ON (ce.id = r.contest_entry_id) " +
                 " WHERE ce.id=?";
         List<ContestEntry> contestEntries = jdbcTemplate.query(sql, new Object[]{id}, CONTEST_ENTRY_RESUL_SET_EXTRACTOR);
         if (contestEntries.isEmpty()) {
@@ -45,9 +46,8 @@ public class ContestEntryRepository extends BaseRepository {
         String sql = "SELECT * FROM users u " +
                 " JOIN contest_entries ce ON (u.id = ce.user_id) " +
                 " JOIN contest_entry_images cei ON (ce.id = cei.contest_entry_id) " +
-                " JOIN reviews r ON (ce.id = r.contest_entry_id) " +
+                " LEFT JOIN reviews r ON (ce.id = r.contest_entry_id) " +
                 " WHERE ce.contest_id=?";
         return jdbcTemplate.query(sql, new Object[]{contestId}, CONTEST_ENTRY_RESUL_SET_EXTRACTOR);
     }
-
 }
