@@ -38,7 +38,14 @@ public class ContestRepository extends BaseRepository {
 
     public List<Contest> findAllActiveContestsForUserId(int userId) {
         String sql = "SELECT * FROM contests c JOIN contest_entries ce " +
-                " ON c.id = ce.contest_id AND c.deadline > NOW() AND ce.user_id = ?";
+                " ON c.id = ce.contest_id AND ce.user_id = ?";
+        return jdbcTemplate.query(sql, new Object[]{userId}, CONTEST_ROW_MAPPER);
+    }
+
+    public List<Contest> findAllNewContestForUser(int userId) {
+        String sql = "SELECT * FROM contests c " +
+                "LEFT JOIN contest_entries ce ON c.id=ce.contest_id" +
+                " WHERE ce.user_id != ? OR ce.user_id IS NULL";
         return jdbcTemplate.query(sql, new Object[]{userId}, CONTEST_ROW_MAPPER);
     }
 

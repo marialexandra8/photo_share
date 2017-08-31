@@ -16,4 +16,6 @@ public interface ContestService {
     List<Contest> findAllActiveContestsForUserId(int userId);
 
     Contest findById(int id);
+
+    List<Contest> findAllNewForUser(int userId);
 }

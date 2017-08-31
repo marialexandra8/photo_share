@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.attribute.UserPrincipal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,6 +58,12 @@ public class ContestController {
     @RequestMapping(value = "/contests", method = RequestMethod.GET)
     public List<ContestJsonResponse> findAll() {
         return toContestJsonListResponse(contestService.findAll());
+    }
+
+    @RequestMapping(value = "/contests/new", method = RequestMethod.GET)
+    public List<ContestJsonResponse> findAllNewForUser(@AuthenticationPrincipal PrincipalUser principalUser) {
+        User user = userService.findByAccountId(principalUser.getAccount().getId());
+        return toContestJsonListResponse(contestService.findAllNewForUser(user.getId()));
     }
 
     @RequestMapping(value = "/contests/{contestId}", method = RequestMethod.GET)
@@ -103,10 +110,12 @@ public class ContestController {
 
     @RequestMapping(value = "/contest/entries/upload", method = RequestMethod.POST)
     public ResponseEntity<HttpStatus> uploadContestEntryImage(
-            @RequestParam("images") List<MultipartFile> images,
+            @RequestParam("firstImage") MultipartFile firstImage,
+            @RequestParam("secondImage") MultipartFile secondImage,
             @RequestParam("contest_id") Integer contestId,
             @AuthenticationPrincipal PrincipalUser principalUser) {
 
+        List<MultipartFile> images = Arrays.asList(firstImage, secondImage);
         if (images.isEmpty()) {
             throw new InvalidArgumentException("The images content cannot be empty");
         }
