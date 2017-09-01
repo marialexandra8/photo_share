@@ -16,7 +16,6 @@ public class ReviewRowMapper implements RowMapper<Review> {
         int id = resultSet.getInt("r.id");
         int userId = resultSet.getInt("r.user_id");
         int contestEntryId = resultSet.getInt("r.contest_entry_id");
-        int rate = resultSet.getInt("r.rate");
 
         return new Review()
                 .setContestEntryId(contestEntryId)

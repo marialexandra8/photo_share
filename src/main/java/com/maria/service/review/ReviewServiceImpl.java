@@ -1,5 +1,6 @@
 package com.maria.service.review;
 
+import com.maria.exception.AlreadyExistsException;
 import com.maria.model.review.CreateReviewRequest;
 import com.maria.model.review.Review;
 import com.maria.repository.ReviewRepository;
@@ -22,8 +23,16 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public Review createReview(CreateReviewRequest createReviewRequest) {
         int contestEntryId = createReviewRequest.getContestEntryId();
-        int rate = createReviewRequest.getRate();
         int userId = createReviewRequest.getUserId();
-        return reviewRepository.createReview(userId, contestEntryId, rate);
+        if (reviewRepository.userAlreadyVotedEntry(userId, contestEntryId)) {
+            throw new AlreadyExistsException("You have already voted this entry!");
+        }
+        return reviewRepository.createReview(userId, contestEntryId);
     }
+
+    @Override
+    public Integer findLikesCountForEntry(int entryId) {
+        return reviewRepository.findLikesCount(entryId);
+    }
+
 }

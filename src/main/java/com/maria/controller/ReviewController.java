@@ -37,9 +37,10 @@ public class ReviewController {
         User user = userService.findByAccountId(principalUser.getAccount().getId());
         CreateReviewRequest createReviewRequest = new CreateReviewRequest()
                 .setContestEntryId(createReviewJsonRequest.getContestEntryId())
-                .setRate(createReviewJsonRequest.getRate())
                 .setUserId(user.getId());
         Review review = reviewService.createReview(createReviewRequest);
-        return new ReviewJsonResponse(review);
+        ReviewJsonResponse reviewJsonResponse = new ReviewJsonResponse(review);
+        reviewJsonResponse.setTotalReviewsCount(reviewService.findLikesCountForEntry(review.getContestEntryId()));
+        return reviewJsonResponse;
     }
 }

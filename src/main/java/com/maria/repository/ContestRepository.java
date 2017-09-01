@@ -50,16 +50,12 @@ public class ContestRepository extends BaseRepository {
                 .addValue("user_id", userId)
                 .addValue("contest_ids", contestsId);
         return namedJdbcTemplate.query(sql, parameterSource, (rs) -> {
-            System.out.println("is false");
-
             while (rs.next()) {
                 int contestId = rs.getInt("c.id");
                 int participatingUserId = rs.getInt("ce.user_id");
                 if (participatingUserId != 0) {
                     contestsWithParticipates.put(contestId, true);
-                    System.out.println(contestId + "is true");
                 }
-                System.out.println(contestId + "is false");
 
             }
             return contestsWithParticipates;
@@ -75,8 +71,8 @@ public class ContestRepository extends BaseRepository {
 
     public List<Contest> findAllNewContestForUser(int userId) {
         String sql = "SELECT * FROM contests c " +
-                "LEFT JOIN contest_entries ce ON c.id=ce.contest_id" +
-                " WHERE ce.user_id != ? OR ce.user_id IS NULL";
+                " WHERE c.id NOT IN " +
+                " (SELECT ce.contest_id FROM contest_entries ce WHERE ce.user_id = ?)";
         return jdbcTemplate.query(sql, new Object[]{userId}, CONTEST_ROW_MAPPER);
     }
 

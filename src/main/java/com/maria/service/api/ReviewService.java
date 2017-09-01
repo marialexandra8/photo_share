@@ -8,4 +8,6 @@ import com.maria.model.review.Review;
  */
 public interface ReviewService {
     Review createReview(CreateReviewRequest createReviewRequest);
+
+    Integer findLikesCountForEntry(int entryId);
 }
