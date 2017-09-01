@@ -23,6 +23,7 @@ import java.io.InputStream;
 import java.nio.file.attribute.UserPrincipal;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -58,6 +59,18 @@ public class ContestController {
     @RequestMapping(value = "/contests", method = RequestMethod.GET)
     public List<ContestJsonResponse> findAll() {
         return toContestJsonListResponse(contestService.findAll());
+    }
+
+    @RequestMapping(value = "/contests/with-participation", method = RequestMethod.GET)
+    public List<ContestWithParticipatingJsonResponse> findAllWithParticipating(@AuthenticationPrincipal PrincipalUser principalUser) {
+        User user = userService.findByAccountId(principalUser.getAccount().getId());
+        List<ContestWithParticipatingJsonResponse> contests = toContestWitParticipatingJsonResponse(contestService.findAll());
+        Map<Integer, Boolean> participatingContestsForUserId = contestService.findParticipatingContestsForUserId(user.getId(), contests
+                .stream()
+                .map(ContestWithParticipatingJsonResponse::getId)
+                .collect(Collectors.toList()));
+        contests.forEach(contest -> contest.setUserIsParticipating(participatingContestsForUserId.get(contest.getId())));
+        return contests;
     }
 
     @RequestMapping(value = "/contests/new", method = RequestMethod.GET)
@@ -149,6 +162,12 @@ public class ContestController {
     private List<ContestEntryJsonResponse> toContestEntryJsonListResponse(List<ContestEntry> contestEntries) {
         return contestEntries.stream()
                 .map(ContestEntryJsonResponse::new)
+                .collect(Collectors.toList());
+    }
+
+    private List<ContestWithParticipatingJsonResponse> toContestWitParticipatingJsonResponse(List<Contest> contests) {
+        return contests.stream()
+                .map(ContestWithParticipatingJsonResponse::new)
                 .collect(Collectors.toList());
     }
 

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created on 8/20/2017.
@@ -58,5 +59,10 @@ public class ContestServiceImpl implements ContestService {
         List<Contest> contests = contestRepository.findAllNewContestForUser(userId);
         contests.forEach(contest -> contest.setLogoPath(fileService.getRelativePathForContestLogo(contest.getLogoName())));
         return contests;
+    }
+
+    @Override
+    public Map<Integer, Boolean> findParticipatingContestsForUserId(int userId, List<Integer> contestIds) {
+        return contestRepository.findParticipatingContestsForUserId(userId, contestIds);
     }
 }
