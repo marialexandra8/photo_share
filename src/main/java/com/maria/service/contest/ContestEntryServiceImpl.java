@@ -2,6 +2,7 @@ package com.maria.service.contest;
 
 import com.maria.model.contest.ContestEntry;
 import com.maria.model.contest.CreateContestEntryRequest;
+import com.maria.model.user.User;
 import com.maria.repository.ContestEntryRepository;
 import com.maria.service.api.ContestEntryService;
 import com.maria.service.api.FileService;
@@ -35,13 +36,19 @@ public class ContestEntryServiceImpl implements ContestEntryService {
 
     @Override
     public List<ContestEntry> findForContestId(int contestId) {
-        return addUrl(contestEntryRepository.findByContestId(contestId));
+        List<ContestEntry> contestEntries = contestEntryRepository.findByContestId(contestId);
+        contestEntries.forEach(entry -> entry.setUser(addUrlToUser(entry.getUser())));
+        return addUrl(contestEntries);
     }
 
     private ContestEntry addUrl(ContestEntry contestEntry) {
         return contestEntry.setImagesPath(contestEntry.getImagesName().stream()
                 .map(image -> fileService.getRelativePathForContestEntryImage(image))
                 .collect(Collectors.toList()));
+    }
+
+    private User addUrlToUser(User user) {
+        return user.setLogoPath(fileService.getRelativePathForUserLogo(user.getLogoName()));
     }
 
     private List<ContestEntry> addUrl(List<ContestEntry> contestEntries) {
